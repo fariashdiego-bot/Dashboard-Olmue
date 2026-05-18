@@ -15,7 +15,7 @@ L.tileLayer(
     'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
     {
         attribution:
-        '&copy; OpenStreetMap & CartoDB'
+        '&copy; OpenStreetMap & CARTO'
     }
 ).addTo(map);
 
