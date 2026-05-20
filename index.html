@@ -30,48 +30,65 @@
 
 <body>
 
-    <!-- MAPA -->
+    <!-- =========================
+         MAPA
+    ========================== -->
+
     <div id="map"></div>
-<!-- KPI MOBILE -->
-<div class="mobile-kpi">
 
-    <div class="kpi-box">
 
-        <div class="kpi-label">
-            Proyectos
+    <!-- =========================
+         KPI MOBILE
+    ========================== -->
+
+    <div class="mobile-kpi">
+
+        <div class="kpi-box">
+
+            <div class="kpi-label">
+                Proyectos
+            </div>
+
+            <div
+                class="kpi-value"
+                id="cantidad-mobile"
+            >
+                0
+            </div>
+
         </div>
 
-        <div
-            class="kpi-value"
-            id="cantidad-mobile"
-        >
-            0
+        <div class="kpi-box">
+
+            <div class="kpi-label">
+                Monto
+            </div>
+
+            <div
+                class="kpi-value"
+                id="monto-mobile"
+            >
+                $0
+            </div>
+
         </div>
 
     </div>
 
-    <div class="kpi-box">
 
-        <div class="kpi-label">
-            Monto
-        </div>
+    <!-- =========================
+         BOTÓN SIDEBAR
+    ========================== -->
 
-        <div
-            class="kpi-value"
-            id="monto-mobile"
-        >
-            $0
-        </div>
-
-    </div>
-
-</div>
-    <!-- BOTON SIDEBAR -->
     <button id="toggleSidebar">
         ☰
     </button>
 
-    <!-- SIDEBAR -->
+
+    <!-- =========================
+         SIDEBAR
+    ========================== -->
+
     <div
         id="sidebar"
         class="sidebar"
@@ -81,10 +98,9 @@
         <div class="sidebar-header">
 
             <img
-    src="https://upload.wikimedia.org/wikipedia/commons/4/45/Escudo_de_Olmu%C3%A9.svg"
-    alt="Escudo Olmué"
-    class="logo-olmue"
-
+                src="https://upload.wikimedia.org/wikipedia/commons/4/45/Escudo_de_Olmu%C3%A9.svg"
+                alt="Escudo Olmué"
+                class="logo-olmue"
             >
 
             <div>
@@ -101,7 +117,8 @@
 
         </div>
 
-        <!-- CARD CANTIDAD -->
+
+        <!-- KPI CANTIDAD -->
         <div class="card">
 
             <div class="card-header">
@@ -125,7 +142,8 @@
 
         </div>
 
-        <!-- CARD MONTO -->
+
+        <!-- KPI MONTO -->
         <div class="card">
 
             <div class="card-header">
@@ -149,6 +167,7 @@
 
         </div>
 
+
         <!-- FILTRO ESTADO -->
         <div class="card">
 
@@ -159,6 +178,7 @@
             <select id="filtro-estados"></select>
 
         </div>
+
 
         <!-- FILTRO FUENTE -->
         <div class="card">
@@ -173,7 +193,11 @@
 
     </div>
 
-    <!-- LEYENDA -->
+
+    <!-- =========================
+         LEYENDA
+    ========================== -->
+
     <div
         id="leyenda-panel"
         class="collapsed"
@@ -187,22 +211,12 @@
 
     </div>
 
+
     <!-- LEAFLET -->
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
     <!-- JS -->
-    <script src="app.js"></script>
-    <div class="mobile-kpi">
-  <div class="kpi-box">
-    <div class="kpi-label">Proyectos</div>
-    <div class="kpi-value" id="cantidad-mobile">0</div>
-  </div>
-
-  <div class="kpi-box">
-    <div class="kpi-label">Monto</div>
-    <div class="kpi-value" id="monto-mobile">$0</div>
-  </div>
-</div>
+    <script src="./app.js"></script>
 
 </body>
 
