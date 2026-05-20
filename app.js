@@ -1,100 +1,59 @@
 document.addEventListener('DOMContentLoaded', () => {
-const cantidadMobileEl = document.getElementById('cantidad-mobile');
-const montoMobileEl = document.getElementById('monto-mobile');
 
-if (cantidadMobileEl) {
-    cantidadMobileEl.textContent = cantidad;
-}
-
-if (montoMobileEl) {
-    montoMobileEl.textContent = montoTexto;
-}
     // =========================
-    // VARIABLES GLOBALES
+    // VARIABLES
     // =========================
 
     let geojsonData;
     let proyectosLayer;
     let featuresFiltradas = [];
+    let map;
 
 
     // =========================
     // MAPA
     // =========================
 
-    const map = L.map('map', {
+    map = L.map('map', {
         zoomControl: false
     });
 
+    setTimeout(() => {
+        if (map?.invalidateSize) map.invalidateSize();
+    }, 300);
+
 
     // =========================
-    // MAPAS BASE
+    // BASE MAPS
     // =========================
 
     const mapaClaro = L.tileLayer(
         'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
-        {
-            attribution: '&copy; OpenStreetMap & CARTO'
-        }
+        { attribution: '&copy; OpenStreetMap & CARTO' }
     );
 
     const mapaOSM = L.tileLayer(
         'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-        {
-            attribution: '&copy; OpenStreetMap'
-        }
+        { attribution: '&copy; OpenStreetMap' }
     );
 
     const mapaSatelital = L.tileLayer(
         'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
-        {
-            attribution: '&copy; Esri'
-        }
+        { attribution: '&copy; Esri' }
     );
 
     mapaClaro.addTo(map);
 
 
-    // =========================
-    // CONTROL CAPAS
-    // =========================
-
-    const mapasBase = {
+    L.control.layers({
         "Minimal": mapaClaro,
         "OpenStreetMap": mapaOSM,
         "Satélite": mapaSatelital
-    };
-
-    L.control.layers(mapasBase).addTo(map);
-
-
-    // =========================
-    // CONTROL ZOOM
-    // =========================
-
-    L.control.zoom({
-        position: 'topright'
     }).addTo(map);
 
 
     // =========================
-    // POSICION CONTROLES
-    // =========================
-
-    setTimeout(() => {
-
-        const controls = document.querySelector('.leaflet-top.leaflet-right');
-
-        if (controls) {
-            controls.style.top = '24px';
-            controls.style.right = '24px';
-        }
-
-    }, 300);
-
-
-    // =========================
-    // ELEMENTOS DASHBOARD
+    // UI
     // =========================
 
     const cantidadEl = document.getElementById('cantidad');
@@ -102,27 +61,30 @@ if (montoMobileEl) {
 
 
     // =========================
-    // TITLE CASE
+    // HELPERS
     // =========================
 
     function titleCase(texto) {
         return String(texto || '')
             .toLowerCase()
-            .replace(/\b\w/g, letra => letra.toUpperCase());
+            .replace(/\b\w/g, l => l.toUpperCase());
     }
 
-
-    // =========================
-    // COLORES
-    // =========================
+    function parseMonto(valor) {
+        return parseFloat(
+            String(valor ?? 0)
+                .replace(/\$/g, '')
+                .replace(/\s/g, '')
+                .replace(/\./g, '')
+                .replace(',', '.')
+        ) || 0;
+    }
 
     function obtenerColor(fuente) {
 
         if (!fuente) return '#2563eb';
 
-        fuente = fuente.toUpperCase();
-
-        switch (fuente) {
+        switch (fuente.toUpperCase()) {
 
             case 'ACELERADORA DE ENERGÍA MUNICIPAL': return '#facc15';
             case 'CAP. I D.S.N° 27 MINVU': return '#2563eb';
@@ -143,90 +105,29 @@ if (montoMobileEl) {
 
 
     // =========================
-    // LEYENDA ITEM
+    // FILTRO GLOBAL (UN SOLO ORIGEN DE VERDAD)
     // =========================
 
-    function crearItemLeyenda(color, texto) {
-        return `
-            <div class="legend-item">
-                <div class="legend-color" style="background:${color};"></div>
-                <span>${texto}</span>
-            </div>
-        `;
+    function esValido(feature) {
+
+        const fuente = feature?.properties?.FUENTE;
+
+        if (!fuente) return false;
+
+        const txt = String(fuente).trim().toUpperCase();
+
+        return (
+            txt !== '' &&
+            txt !== 'NULL' &&
+            txt !== 'UNDEFINED' &&
+            !txt.includes('COMPROMISO ALCALDE')
+        );
     }
 
 
     // =========================
-    // LEYENDA
+    // GEOJSON LAYER
     // =========================
-
-    function actualizarLeyenda() {
-
-        if (!proyectosLayer) return;
-
-        const contenedor = document.getElementById('leyenda-contenido');
-        if (!contenedor) return;
-
-        contenedor.innerHTML = '';
-
-        const bounds = map.getBounds();
-        const fuentesVisibles = new Set();
-
-        proyectosLayer.eachLayer(layer => {
-
-            procesar(layer);
-
-        });
-
-        function procesar(layer, parentFeature = null) {
-
-            const feature = layer.feature || parentFeature;
-
-            if (typeof layer.getLatLng === 'function') {
-
-                const latlng = layer.getLatLng();
-
-                if (bounds.contains(latlng)) {
-
-                    const fuente = feature?.properties?.FUENTE;
-                    if (fuente) fuentesVisibles.add(fuente);
-                }
-            }
-
-            else if (typeof layer.eachLayer === 'function') {
-                layer.eachLayer(sub => procesar(sub, feature));
-            }
-        }
-
-        if (fuentesVisibles.size === 0) {
-            contenedor.innerHTML = `<div class="legend-empty">No hay proyectos visibles</div>`;
-            return;
-        }
-
-        [...fuentesVisibles].forEach(fuente => {
-            contenedor.innerHTML += crearItemLeyenda(
-                obtenerColor(fuente),
-                fuente
-            );
-        });
-    }
-
-
-    // =========================
-    // CAPA GEOJSON
-    // =========================
-
-    function parseMonto(valor) {
-
-        return parseFloat(
-            String(valor ?? 0)
-                .replace(/\$/g, '')
-                .replace(/\s/g, '')
-                .replace(/\./g, '')
-                .replace(',', '.')
-        ) || 0;
-    }
-
 
     function crearCapaGeoJSON(data) {
 
@@ -237,34 +138,29 @@ if (montoMobileEl) {
                 const color = obtenerColor(feature.properties.FUENTE);
                 const id = feature.properties.ID || '';
 
-                const icono = L.divIcon({
-
-                    className: 'custom-marker',
-
-                    html: `
-                        <div style="
-                            width:28px;
-                            height:28px;
-                            border-radius:50%;
-                            background:${color};
-                            border:2px solid white;
-                            box-shadow:0 0 12px rgba(0,0,0,0.35);
-                            display:flex;
-                            align-items:center;
-                            justify-content:center;
-                            color:white;
-                            font-size:11px;
-                            font-weight:700;
-                        ">
-                            ${id}
-                        </div>
-                    `,
-
-                    iconSize: [28, 28],
-                    iconAnchor: [14, 14]
+                return L.marker(latlng, {
+                    icon: L.divIcon({
+                        className: 'custom-marker',
+                        html: `
+                            <div style="
+                                width:28px;
+                                height:28px;
+                                border-radius:50%;
+                                background:${color};
+                                border:2px solid white;
+                                display:flex;
+                                align-items:center;
+                                justify-content:center;
+                                color:white;
+                                font-size:11px;
+                                font-weight:700;">
+                                ${id}
+                            </div>
+                        `,
+                        iconSize: [28, 28],
+                        iconAnchor: [14, 14]
+                    })
                 });
-
-                return L.marker(latlng, { icon: icono });
             },
 
             onEachFeature(feature, layer) {
@@ -273,9 +169,7 @@ if (montoMobileEl) {
                 const monto = parseMonto(feature.properties.MONTO);
 
                 layer.bindPopup(`
-
                     <div class="popup-header">${titulo}</div>
-
                     <div class="popup-body">
 
                         <div class="popup-row">
@@ -294,7 +188,6 @@ if (montoMobileEl) {
                         </div>
 
                     </div>
-
                 `);
             }
 
@@ -306,96 +199,147 @@ if (montoMobileEl) {
     // DASHBOARD
     // =========================
 
-   function actualizarDashboard() {
+    function actualizarDashboard() {
 
-    let cantidad = 0;
-    let monto = 0;
+        if (!proyectosLayer) return;
+
+        let cantidad = 0;
+        let monto = 0;
+
+        const bounds = map.getBounds();
+
+        proyectosLayer.eachLayer(layer => {
+
+            const f = layer.feature;
+            if (!f?.geometry) return;
+            if (!esValido(f)) return;
+
+            const g = f.geometry;
+
+            const check = c =>
+                bounds.contains(L.latLng(c[1], c[0]));
+
+            if (g.type === "Point") {
+
+                if (check(g.coordinates)) {
+                    cantidad++;
+                    monto += parseMonto(f.properties.MONTO);
+                }
+            }
+
+            else if (g.type === "MultiPoint") {
+
+                let visible = false;
+
+                g.coordinates.forEach(c => {
+                    if (check(c)) visible = true;
+                });
+
+                if (visible) {
+                    cantidad++;
+                    monto += parseMonto(f.properties.MONTO);
+                }
+            }
+        });
+
+        const montoTexto = '$' + monto.toLocaleString('es-CL');
+
+        cantidadEl.textContent = cantidad;
+        montoEl.textContent = montoTexto;
+
+        const len = montoTexto.length;
+
+        if (len > 18) montoEl.style.fontSize = '22px';
+        else if (len > 15) montoEl.style.fontSize = '24px';
+        else if (len > 12) montoEl.style.fontSize = '28px';
+        else montoEl.style.fontSize = '34px';
+    }
+
+
+    // =========================
+    // LEYENDA
+    // =========================
+
+function actualizarLeyenda() {
+
+    if (!proyectosLayer) return;
+
+    const cont = document.getElementById('leyenda-contenido');
+    if (!cont) return;
+
+    cont.innerHTML = '';
 
     const bounds = map.getBounds();
+    const fuentes = new Set();
 
     proyectosLayer.eachLayer(layer => {
 
         const feature = layer.feature;
+        if (!feature) return;
 
-        if (!feature || !feature.geometry) return;
-
-        const geometry = feature.geometry;
-
-        const parseMonto = (valor) => {
-            return parseFloat(
-                String(valor ?? 0)
-                    .replace(/\$/g, '')
-                    .replace(/\s/g, '')
-                    .replace(/\./g, '')
-                    .replace(',', '.')
-            ) || 0;
-        };
+        const geom = feature.geometry;
+        if (!geom) return;
 
         // =========================
         // POINT
         // =========================
+        if (geom.type === "Point") {
 
-        if (geometry.type === "Point") {
+            const c = geom.coordinates;
+            const latlng = L.latLng(c[1], c[0]);
 
-            const coords = geometry.coordinates;
-
-            const punto = L.latLng(coords[1], coords[0]);
-
-            if (bounds.contains(punto)) {
-
-                cantidad++;
-
-                monto += parseMonto(feature.properties.MONTO);
+            if (bounds.contains(latlng)) {
+                fuentes.add(feature.properties.FUENTE);
             }
         }
 
         // =========================
         // MULTIPOINT
         // =========================
-
-        else if (geometry.type === "MultiPoint") {
+        else if (geom.type === "MultiPoint") {
 
             let visible = false;
 
-            geometry.coordinates.forEach(coords => {
+            geom.coordinates.forEach(c => {
 
-                const punto = L.latLng(coords[1], coords[0]);
+                const latlng = L.latLng(c[1], c[0]);
 
-                if (bounds.contains(punto)) {
+                if (bounds.contains(latlng)) {
                     visible = true;
                 }
             });
 
             if (visible) {
-
-                cantidad++;
-
-                monto += parseMonto(feature.properties.MONTO);
+                fuentes.add(feature.properties.FUENTE);
             }
         }
 
     });
 
     // =========================
-    // UI UPDATE
+    // RENDER
     // =========================
 
-    cantidadEl.textContent = cantidad;
+    if (fuentes.size === 0) {
 
-    const montoTexto = '$' + monto.toLocaleString('es-CL');
+        cont.innerHTML = `
+            <div class="legend-empty">
+                No hay proyectos visibles
+            </div>
+        `;
 
-    montoEl.textContent = montoTexto;
+        return;
+    }
 
-    // =========================
-    // FONT SIZE ADAPTATIVO
-    // =========================
+    [...fuentes].forEach(fuente => {
 
-    const largo = montoTexto.length;
-
-    if (largo > 18) montoEl.style.fontSize = '24px';
-    else if (largo > 15) montoEl.style.fontSize = '24px';
-    else if (largo > 12) montoEl.style.fontSize = '26px';
-    else montoEl.style.fontSize = '30px';
+        cont.innerHTML += `
+            <div class="legend-item">
+                <div class="legend-color" style="background:${obtenerColor(fuente)}"></div>
+                <span>${fuente}</span>
+            </div>
+        `;
+    });
 }
 
     // =========================
@@ -404,33 +348,22 @@ if (montoMobileEl) {
 
     function crearFiltros() {
 
-        const estados = [...new Set(geojsonData.features.map(f => f.properties.ESTADO))];
-        const fuentes = [...new Set(geojsonData.features.map(f => f.properties.FUENTE))];
+        const estados = [...new Set(geojsonData.features.map(f => f.properties.ESTADO))].filter(v => v && String(v).toUpperCase() !== 'NULL');
+        const fuentes = [...new Set(geojsonData.features.map(f => f.properties.FUENTE))].filter(v => v && String(v).toUpperCase() !== 'NULL');
 
-        const estadosSelect = document.getElementById('filtro-estados');
-        const fuentesSelect = document.getElementById('filtro-fuentes');
+        const estSel = document.getElementById('filtro-estados');
+        const fuenSel = document.getElementById('filtro-fuentes');
 
-        estadosSelect.innerHTML = `<option value="TODOS">Todos</option>`;
-        fuentesSelect.innerHTML = `<option value="TODOS">Todos</option>`;
+        estSel.innerHTML = `<option value="TODOS">Todos</option>`;
+        fuenSel.innerHTML = `<option value="TODOS">Todos</option>`;
 
-        estados.forEach(e => {
-            if (!e) return;
-            estadosSelect.innerHTML += `<option value="${e}">${e}</option>`;
-        });
+        estados.forEach(e => estSel.innerHTML += `<option value="${e}">${e}</option>`);
+        fuentes.forEach(f => fuenSel.innerHTML += `<option value="${f}">${f}</option>`);
 
-        fuentes.forEach(f => {
-            if (!f) return;
-            fuentesSelect.innerHTML += `<option value="${f}">${f}</option>`;
-        });
-
-        estadosSelect.addEventListener('change', actualizarFiltros);
-        fuentesSelect.addEventListener('change', actualizarFiltros);
+        estSel.addEventListener('change', actualizarFiltros);
+        fuenSel.addEventListener('change', actualizarFiltros);
     }
 
-
-    // =========================
-    // FILTROS
-    // =========================
 
     function actualizarFiltros() {
 
@@ -438,6 +371,8 @@ if (montoMobileEl) {
         const fuente = document.getElementById('filtro-fuentes').value;
 
         featuresFiltradas = geojsonData.features.filter(f => {
+
+            if (!esValido(f)) return false;
 
             return (
                 (estado === 'TODOS' || f.properties.ESTADO === estado) &&
@@ -460,24 +395,16 @@ if (montoMobileEl) {
 
 
     // =========================
-    // CARGA GEOJSON
+    // LOAD GEOJSON
     // =========================
 
-    fetch('proyectos.geojson')
+    fetch('./proyectos.geojson')
         .then(r => r.json())
         .then(data => {
 
             geojsonData = {
                 ...data,
-                features: data.features.filter(f => {
-
-                    const fuente = f.properties.FUENTE;
-                    if (!fuente) return false;
-
-                    const t = String(fuente).trim().toUpperCase();
-
-                    return !(t === '' || t === 'NULL' || t.includes('COMPROMISO ALCALDE'));
-                })
+                features: data.features.filter(esValido)
             };
 
             featuresFiltradas = geojsonData.features;
@@ -489,11 +416,10 @@ if (montoMobileEl) {
 
             proyectosLayer.addTo(map);
 
-            if (proyectosLayer.getBounds && proyectosLayer.getBounds().isValid()) {
-                map.fitBounds(proyectosLayer.getBounds());
-            }
+            map.fitBounds(proyectosLayer.getBounds());
 
             crearFiltros();
+
             actualizarDashboard();
             actualizarLeyenda();
 
@@ -502,35 +428,21 @@ if (montoMobileEl) {
                 actualizarLeyenda();
             });
 
-        })
-        .catch(err => console.error('Error cargando GeoJSON:', err));
+        });
 
 
     // =========================
-    // SIDEBAR
+    // UI EVENTS
     // =========================
 
-    const toggleSidebar = document.getElementById('toggleSidebar');
-    const sidebar = document.getElementById('sidebar');
+    document.getElementById('toggleSidebar')
+        ?.addEventListener('click', () => {
+            document.getElementById('sidebar').classList.toggle('collapsed');
+        });
 
-    toggleSidebar.addEventListener('click', () => {
-        sidebar.classList.toggle('collapsed');
-        toggleSidebar.classList.toggle('collapsed');
-    });
-
-
-    // =========================
-    // LEYENDA TOGGLE
-    // =========================
-
-    const leyendaHeader = document.getElementById('leyenda-header');
-    const leyendaPanel = document.getElementById('leyenda-panel');
-
-    leyendaHeader.addEventListener('click', () => {
-        leyendaPanel.classList.toggle('collapsed');
-    });
+    document.getElementById('leyenda-header')
+        ?.addEventListener('click', () => {
+            document.getElementById('leyenda-panel').classList.toggle('collapsed');
+        });
 
 });
-setTimeout(() => {
-    map.invalidateSize();
-}, 500);
