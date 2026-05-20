@@ -446,3 +446,87 @@ select {
     margin-top: 90px !important;
 
 }
+@media (max-width: 768px) {
+
+    /* =========================
+       MAPA
+    ========================= */
+
+    #map {
+        height: 100vh;
+    }
+
+    /* =========================
+       SIDEBAR
+    ========================= */
+
+    .sidebar {
+
+        width: calc(100% - 32px);
+        left: 16px;
+        right: 16px;
+
+        top: 16px;
+
+        border-radius: 20px;
+
+        padding: 18px;
+    }
+
+    .sidebar.collapsed {
+        transform: translateY(-120%);
+    }
+
+    /* =========================
+       BOTÓN SIDEBAR
+    ========================= */
+
+    #toggleSidebar {
+
+        top: auto;
+        bottom: 24px;
+        left: 16px;
+
+        width: 52px;
+        height: 52px;
+
+        border-radius: 14px;
+    }
+
+    #toggleSidebar.collapsed {
+        left: 16px;
+    }
+
+    /* =========================
+       CARDS
+    ========================= */
+
+    .card-numero {
+        font-size: 34px;
+    }
+
+    .titulo-app {
+        font-size: 24px;
+    }
+
+    /* =========================
+       LEYENDA
+    ========================= */
+
+    #leyenda-panel {
+
+        width: calc(100% - 32px);
+        right: 16px;
+        left: 16px;
+
+        bottom: 16px;
+    }
+
+    /* =========================
+       SELECTS
+    ========================= */
+
+    select {
+        font-size: 14px;
+    }
+}
