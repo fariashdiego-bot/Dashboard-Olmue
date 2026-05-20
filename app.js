@@ -1,5 +1,9 @@
 document.addEventListener('DOMContentLoaded', () => {
+const isMobile = window.matchMedia("(max-width: 768px)").matches;
 
+if (isMobile) {
+    document.body.classList.add("mobile");
+}
     // =========================
     // VARIABLES GLOBALES
     // =========================
