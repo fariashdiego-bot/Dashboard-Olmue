@@ -484,3 +484,73 @@ select {
         bottom: 12px;
     }
 }
+/* =========================
+   MOBILE HORIZONTAL
+========================= */
+
+@media (max-width: 900px) and (orientation: landscape) {
+
+    /* KPI MÁS COMPACTOS */
+    .mobile-kpi {
+
+        top: 10px;
+        left: 10px;
+        right: auto;
+
+        width: 320px;
+
+        gap: 8px;
+    }
+
+    .kpi-box {
+
+        padding: 10px 12px;
+    }
+
+    .kpi-value {
+
+        font-size: 16px;
+    }
+
+    /* LEYENDA PEQUEÑA A LA DERECHA */
+    #leyenda-panel {
+
+        width: 260px;
+
+        left: auto;
+        right: 10px;
+
+        bottom: 10px;
+
+        max-height: 70vh;
+    }
+
+    #leyenda-contenido {
+
+        max-height: 220px;
+
+        overflow-y: auto;
+    }
+
+    #leyenda-header {
+
+        padding: 12px 14px;
+
+        font-size: 14px;
+    }
+
+    .legend-item {
+
+        gap: 8px;
+
+        margin-bottom: 8px;
+
+        font-size: 13px;
+    }
+
+    .legend-color {
+
+        width: 14px;
+        height: 14px;
+    }
+}
