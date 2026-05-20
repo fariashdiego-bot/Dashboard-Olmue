@@ -515,18 +515,6 @@ select {
         bottom: 12px;
     }
 
-    /* =========================
-       LEYENDA
-    ========================= */
-
-    #leyenda-panel {
-
-        width: calc(100% - 32px);
-        right: 16px;
-        left: 16px;
-
-        bottom: 16px;
-    }
 
     /* =========================
        SELECTS
