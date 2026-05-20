@@ -1,5 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
-const isMobile = window.matchMedia("(max-width: 768px)").matches;
+const isMobile =
+    window.matchMedia("(max-width: 900px)").matches ||
+    window.innerWidth <= 900;
 
 if (isMobile) {
     document.body.classList.add("mobile");
