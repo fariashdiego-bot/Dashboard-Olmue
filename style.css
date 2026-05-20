@@ -1,0 +1,547 @@
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+
+    margin: 0;
+    padding: 0;
+
+    width: 100%;
+    height: 100%;
+
+    overflow: hidden;
+    overflow-x: hidden;
+
+    font-family: Inter, sans-serif;
+
+    background: #f5f7fa;
+
+    font-size: 16px;
+
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+}
+
+
+/* =========================
+   MAPA
+========================= */
+
+#map {
+
+    width: 100%;
+    height: 100vh;
+}
+
+
+/* =========================
+   SIDEBAR
+========================= */
+
+.sidebar {
+
+    position: absolute;
+
+    top: 24px;
+    left: 24px;
+
+    width: 340px;
+
+    z-index: 2000;
+
+    padding: 24px;
+
+    border-radius: 28px;
+
+    background: linear-gradient(
+        135deg,
+        #1e293bf2,
+        #0070bb
+    );
+
+    backdrop-filter: blur(14px);
+
+    box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+
+    transition: all 0.35s ease;
+}
+
+.sidebar.collapsed {
+    transform: translateX(-420px);
+}
+
+
+/* =========================
+   BOTÓN SIDEBAR
+========================= */
+
+#toggleSidebar {
+
+    position: absolute;
+
+    top: 24px;
+    left: 390px;
+
+    z-index: 3000;
+
+    width: 50px;
+    height: 50px;
+
+    border: none;
+
+    border-radius: 16px;
+
+    background: #0070bb;
+
+    color: white;
+
+    font-size: 22px;
+
+    cursor: pointer;
+
+    box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+
+    transition: all 0.35s ease;
+}
+
+#toggleSidebar.collapsed {
+    left: 24px;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.sidebar-header {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 18px;
+
+    margin-bottom: 28px;
+}
+
+.logo-olmue {
+
+    width: 78px;
+    height: 78px;
+
+    object-fit: contain;
+
+    padding: 6px;
+
+    border-radius: 18px;
+
+    background: rgba(255,255,255,0.08);
+
+    pointer-events: none;
+}
+
+.titulo-app {
+
+    margin: 0;
+
+    font-size: 30px;
+
+    font-weight: 800;
+
+    color: white;
+}
+
+.subtitulo-app {
+
+    margin-top: 6px;
+
+    font-size: 14px;
+
+    color: rgba(255,255,255,0.7);
+}
+
+
+/* =========================
+   CARDS
+========================= */
+
+.card {
+
+    background: #1e293bf2;
+
+    border-radius: 22px;
+
+    padding: 20px;
+
+    margin-bottom: 18px;
+
+    color: white;
+}
+
+.card-header {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    margin-bottom: 12px;
+}
+
+.card-icon {
+
+    width: 46px;
+    height: 46px;
+
+    border-radius: 14px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 20px;
+}
+
+.icon-blue {
+
+    background: linear-gradient(
+        135deg,
+        #0070bb,
+        #1d4ed8
+    );
+}
+
+.icon-green {
+
+    background: linear-gradient(
+        135deg,
+        #10b981,
+        #059669
+    );
+}
+
+.card-title {
+
+    font-size: 15px;
+
+    color: rgba(255,255,255,0.75);
+}
+
+.card-numero {
+
+    font-size: 42px;
+
+    font-weight: 800;
+}
+
+
+/* =========================
+   SELECT
+========================= */
+
+select {
+
+    width: 100%;
+
+    margin-top: 14px;
+
+    padding: 14px;
+
+    border: none;
+
+    border-radius: 14px;
+
+    background: rgba(15,23,42,0.95);
+
+    color: white;
+
+    font-size: 14px;
+}
+
+
+/* =========================
+   POPUP
+========================= */
+
+.leaflet-popup-content-wrapper {
+
+    border-radius: 22px;
+
+    overflow: hidden;
+}
+
+.leaflet-popup-content {
+
+    margin: 0 !important;
+}
+
+.popup-header {
+
+    padding: 18px;
+
+    background: linear-gradient(
+        135deg,
+        #1e293bf2,
+        #0070bb
+    );
+
+    color: white;
+
+    font-weight: 700;
+}
+
+.popup-body {
+
+    padding: 18px;
+
+    background: white;
+}
+
+.popup-row {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    padding: 10px 0;
+
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.popup-row:last-child {
+    border-bottom: none;
+}
+
+
+/* =========================
+   LEYENDA
+========================= */
+
+#leyenda-panel {
+
+    position: absolute;
+
+    bottom: 24px;
+    right: 24px;
+
+    width: 280px;
+
+    z-index: 2500;
+
+    border-radius: 22px;
+
+    overflow: hidden;
+
+    background: rgba(255,255,255,0.96);
+
+    backdrop-filter: blur(12px);
+
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+#leyenda-header {
+
+    padding: 16px 18px;
+
+    background: linear-gradient(
+        135deg,
+        #1e293bf2,
+        #0070bb
+    );
+
+    color: white;
+
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+#leyenda-contenido {
+
+    padding: 16px;
+
+    max-height: 320px;
+
+    overflow-y: auto;
+}
+
+#leyenda-panel.collapsed #leyenda-contenido {
+
+    max-height: 0;
+
+    padding-top: 0;
+    padding-bottom: 0;
+
+    overflow: hidden;
+}
+
+.legend-item {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    margin-bottom: 12px;
+}
+
+.legend-color {
+
+    width: 16px;
+    height: 16px;
+
+    border-radius: 50%;
+
+    border: 2px solid white;
+}
+
+
+/* =========================
+   LEAFLET
+========================= */
+
+.leaflet-control-layers {
+
+    border: none !important;
+
+    border-radius: 18px !important;
+
+    overflow: hidden;
+}
+
+.leaflet-top.leaflet-right .leaflet-control-zoom {
+
+    margin-top: 90px !important;
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 900px) {
+
+    #map {
+        width: 100vw;
+        height: 100vh;
+    }
+
+    .sidebar {
+
+        width: calc(100vw - 24px);
+
+        left: 12px;
+        right: 12px;
+
+        top: 12px;
+
+        padding: 16px;
+
+        border-radius: 18px;
+    }
+
+    .sidebar.collapsed {
+        transform: translateY(-120%);
+    }
+
+    #toggleSidebar {
+
+        left: 12px !important;
+
+        top: auto;
+        bottom: 20px;
+
+        width: 52px;
+        height: 52px;
+    }
+
+    #toggleSidebar.collapsed {
+        left: 12px !important;
+    }
+
+    .card-numero {
+        font-size: 28px;
+    }
+
+    .titulo-app {
+        font-size: 22px;
+    }
+
+    #leyenda-panel {
+
+        width: calc(100vw - 24px);
+
+        left: 12px;
+        right: 12px;
+
+        bottom: 12px;
+    }
+
+    select {
+        font-size: 14px;
+    }
+}
+/* =========================
+   MOBILE KPI FLOATING MODE
+========================= */
+
+.mobile-kpi {
+    display: none;
+}
+
+@media (max-width: 900px) {
+
+    /* ocultamos sidebar completo en móvil */
+    .sidebar {
+        display: none;
+    }
+
+    #toggleSidebar {
+        display: none;
+    }
+
+    /* KPIs flotantes */
+    .mobile-kpi {
+        display: flex;
+        position: absolute;
+        top: 12px;
+        left: 12px;
+        right: 12px;
+
+        gap: 10px;
+        z-index: 5000;
+    }
+
+    .kpi-box {
+        flex: 1;
+        background: rgba(15, 23, 42, 0.92);
+        color: white;
+
+        border-radius: 16px;
+        padding: 12px 14px;
+
+        backdrop-filter: blur(10px);
+
+        box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .kpi-label {
+        font-size: 12px;
+        opacity: 0.75;
+    }
+
+    .kpi-value {
+        font-size: 20px;
+        font-weight: 800;
+    }
+}
