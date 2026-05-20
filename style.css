@@ -20,9 +20,7 @@ body {
     background: #f5f7fa;
 
     font-size: 16px;
-
     -webkit-text-size-adjust: 100%;
-    -ms-text-size-adjust: 100%;
 }
 
 
@@ -31,14 +29,13 @@ body {
 ========================= */
 
 #map {
-
     width: 100%;
     height: 100vh;
 }
 
 
 /* =========================
-   SIDEBAR
+   SIDEBAR (DESKTOP)
 ========================= */
 
 .sidebar {
@@ -208,21 +205,11 @@ body {
 }
 
 .icon-blue {
-
-    background: linear-gradient(
-        135deg,
-        #0070bb,
-        #1d4ed8
-    );
+    background: linear-gradient(135deg, #0070bb, #1d4ed8);
 }
 
 .icon-green {
-
-    background: linear-gradient(
-        135deg,
-        #10b981,
-        #059669
-    );
+    background: linear-gradient(135deg, #10b981, #059669);
 }
 
 .card-title {
@@ -276,7 +263,6 @@ select {
 }
 
 .leaflet-popup-content {
-
     margin: 0 !important;
 }
 
@@ -416,88 +402,32 @@ select {
 }
 
 .leaflet-top.leaflet-right .leaflet-control-zoom {
-
     margin-top: 90px !important;
 }
 
 
 /* =========================
-   RESPONSIVE
-========================= */
-
-@media (max-width: 900px) {
-
-    #map {
-        width: 100vw;
-        height: 100vh;
-    }
-
-    .sidebar {
-
-        width: calc(100vw - 24px);
-
-        left: 12px;
-        right: 12px;
-
-        top: 12px;
-
-        padding: 16px;
-
-        border-radius: 18px;
-    }
-
-    .sidebar.collapsed {
-        transform: translateY(-120%);
-    }
-
-    #toggleSidebar {
-
-        left: 12px !important;
-
-        top: auto;
-        bottom: 20px;
-
-        width: 52px;
-        height: 52px;
-    }
-
-    #toggleSidebar.collapsed {
-        left: 12px !important;
-    }
-
-    .card-numero {
-        font-size: 28px;
-    }
-
-    .titulo-app {
-        font-size: 22px;
-    }
-
-    #leyenda-panel {
-
-        width: calc(100vw - 24px);
-
-        left: 12px;
-        right: 12px;
-
-        bottom: 12px;
-    }
-
-    select {
-        font-size: 14px;
-    }
-}
-/* =========================
-   MOBILE KPI FLOATING MODE
+   MOBILE KPI MODE
 ========================= */
 
 .mobile-kpi {
     display: none;
 }
 
+
+/* =========================
+   RESPONSIVE MOBILE
+========================= */
+
 @media (max-width: 900px) {
 
-    /* ocultamos sidebar completo en móvil */
+    /* MAPA */
+    #map {
+        width: 100vw;
+        height: 100vh;
+    }
+
+    /* OCULTAR SIDEBAR COMPLETO */
     .sidebar {
         display: none;
     }
@@ -506,24 +436,32 @@ select {
         display: none;
     }
 
-    /* KPIs flotantes */
+    /* KPIs FLOTA EN MÓVIL */
     .mobile-kpi {
+
         display: flex;
+
         position: absolute;
+
         top: 12px;
         left: 12px;
         right: 12px;
 
         gap: 10px;
+
         z-index: 5000;
     }
 
     .kpi-box {
+
         flex: 1;
+
         background: rgba(15, 23, 42, 0.92);
+
         color: white;
 
         border-radius: 16px;
+
         padding: 12px 14px;
 
         backdrop-filter: blur(10px);
@@ -532,6 +470,7 @@ select {
 
         display: flex;
         flex-direction: column;
+
         gap: 4px;
     }
 
@@ -543,5 +482,16 @@ select {
     .kpi-value {
         font-size: 20px;
         font-weight: 800;
+    }
+
+    /* LEYENDA EN MÓVIL */
+    #leyenda-panel {
+
+        width: calc(100vw - 24px);
+
+        left: 12px;
+        right: 12px;
+
+        bottom: 12px;
     }
 }
