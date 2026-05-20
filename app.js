@@ -528,3 +528,6 @@ if (isMobile) {
     });
 
 });
+setTimeout(() => {
+    map.invalidateSize();
+}, 500);
