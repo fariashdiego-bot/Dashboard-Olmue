@@ -2,6 +2,9 @@ html,
 * {
     box-sizing: border-box;
 }
+html, body {
+    overflow-x: hidden;
+}
 body {
 
     margin: 0;
@@ -449,67 +452,67 @@ select {
     margin-top: 90px !important;
 
 }
-@media (max-width: 768px) {
+@media (max-width: 900px) {
 
-    /* =========================
-       MAPA
-    ========================= */
-
+    /* MAPA */
     #map {
+        width: 100vw;
         height: 100vh;
     }
 
-    /* =========================
-       SIDEBAR
-    ========================= */
-
+    /* SIDEBAR FULL RESPONSIVE */
     .sidebar {
 
-        width: calc(100% - 32px);
-        left: 16px;
-        right: 16px;
+        width: calc(100vw - 24px);
+        max-width: 100%;
+        left: 12px;
+        right: 12px;
 
-        top: 16px;
+        top: 12px;
 
-        border-radius: 20px;
+        padding: 16px;
 
-        padding: 18px;
+        border-radius: 18px;
     }
 
     .sidebar.collapsed {
         transform: translateY(-120%);
     }
 
-    /* =========================
-       BOTÓN SIDEBAR
-    ========================= */
-
+    /* BOTÓN SIEMPRE DENTRO DE VIEWPORT */
     #toggleSidebar {
 
+        left: 12px !important;
+        right: auto !important;
+
+        bottom: 20px;
         top: auto;
-        bottom: 24px;
-        left: 16px;
 
         width: 52px;
         height: 52px;
-
-        border-radius: 14px;
     }
 
     #toggleSidebar.collapsed {
-        left: 16px;
+        left: 12px !important;
     }
 
-    /* =========================
-       CARDS
-    ========================= */
-
+    /* KPIs MÁS COMPACTOS */
     .card-numero {
-        font-size: 34px;
+        font-size: 28px;
     }
 
     .titulo-app {
-        font-size: 24px;
+        font-size: 22px;
+    }
+
+    /* LEYENDA FULL WIDTH */
+    #leyenda-panel {
+
+        width: calc(100vw - 24px);
+        left: 12px;
+        right: 12px;
+
+        bottom: 12px;
     }
 
     /* =========================
