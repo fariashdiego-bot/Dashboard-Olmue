@@ -1,0 +1,12 @@
+{
+"type": "FeatureCollection",
+"name": "ptospoly_proyectos",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "OBJECTID": 1, "ID": 2, "SHAPE_Leng": 1498.2055111, "SHAPE_Area": 14626.8801982, "OBJECTID_1": 2, "ID_2": 2.0, "PROY": "MEJORAMIENTO INTEGRAL EJE PRAT, PLAZA MANUEL MONTT Y PARQUE TENIENTE MERINO DE OLMUÉ", "FUENTE": "F.N.D.R. TRADICIONAL", "ESTADO": "DISEÑO EN EJECUCIÓN", "MONTO": 134686000.0, "ORIG_FID": 0 }, "geometry": { "type": "Point", "coordinates": [ -71.18315229949232, -32.995356093707649 ] } },
+{ "type": "Feature", "properties": { "OBJECTID": 2, "ID": 13, "SHAPE_Leng": 813.59653874100002, "SHAPE_Area": 25313.909311200001, "OBJECTID_1": 13, "ID_2": 13.0, "PROY": "CONSTRUCCION SISTEMA FOTOVOLTAICO ONGRID PARA SSR EL GRANIZO DE LA COMUNA DE OLMUÉ", "FUENTE": "F.N.D.R. TRADICIONAL", "ESTADO": "RECOMENDADO SATISFACTORIAMENTE (RS)", "MONTO": 1767942000.0, "ORIG_FID": 1 }, "geometry": { "type": "Point", "coordinates": [ -71.165927532022963, -33.001770947320971 ] } },
+{ "type": "Feature", "properties": { "OBJECTID": 6, "ID": 22, "SHAPE_Leng": 1498.20550159, "SHAPE_Area": 14626.8840057, "OBJECTID_1": 22, "ID_2": 22.0, "PROY": "MEJORAMIENTO INTEGRAL EJE PRAT, PLAZA MANUEL MONTT Y PARQUE TENIENTE MERINO DE OLMUÉ", "FUENTE": "F.N.D.R. TRADICIONAL", "ESTADO": "EN FORMULACIÓN", "MONTO": 1457616504.0, "ORIG_FID": 2 }, "geometry": { "type": "Point", "coordinates": [ -71.183152293918425, -32.995355867452027 ] } },
+{ "type": "Feature", "properties": { "OBJECTID": 7, "ID": 74, "SHAPE_Leng": 888.01295099200001, "SHAPE_Area": 1953.8809555800001, "OBJECTID_1": 74, "ID_2": 74.0, "PROY": "MEJORAMIENTO BANDEJON CENTRAL PEDRO AGUIRRE CERDA, OLMUÉ", "FUENTE": "PMU EMERGENCIA", "ESTADO": "EN FORMULACIÓN", "MONTO": 150000000.0, "ORIG_FID": 3 }, "geometry": { "type": "Point", "coordinates": [ -71.174721133075025, -32.988212753145412 ] } },
+{ "type": "Feature", "properties": { "OBJECTID": 8, "ID": 103, "SHAPE_Leng": 289.60106958699998, "SHAPE_Area": 989.451955709, "OBJECTID_1": 103, "ID_2": 103.0, "PROY": "MEJORAMIENTO ESPACIO PUBLICO HUGO QUINTEROS P14, OLMUE", "FUENTE": null, "ESTADO": null, "MONTO": 0.0, "ORIG_FID": 4 }, "geometry": { "type": "Point", "coordinates": [ -71.165304343242511, -32.998724760953515 ] } }
+]
+}
