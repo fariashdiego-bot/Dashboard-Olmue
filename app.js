@@ -483,32 +483,91 @@ proyectosLayer.eachLayer(layer => {
                 texto;
     }
 
+function actualizarLeyenda() {
+
+    const cont =
+        document.getElementById(
+            'leyenda-contenido'
+        );
+
+    if (!cont || !proyectosLayer) return;
+
+    cont.innerHTML = '';
+
+    const bounds = map.getBounds();
+
+    const fuentesMap = new Map();
+
     // =========================
-    // LEYENDA
+    // PUNTOS VISIBLES
     // =========================
 
-    function actualizarLeyenda() {
+    proyectosLayer.eachLayer(layer => {
 
-        const cont =
-            document.getElementById(
-                'leyenda-contenido'
+        const feature =
+            layer.feature;
+
+        if (!feature) return;
+
+        const geom =
+            feature.geometry;
+
+        let visible = false;
+
+        if (geom.type === 'Point') {
+
+            const c = geom.coordinates;
+
+            visible = bounds.contains(
+                L.latLng(c[1], c[0])
             );
+        }
 
-        if (!cont || !proyectosLayer) return;
+        else if (geom.type === 'MultiPoint') {
 
-        cont.innerHTML = '';
+            geom.coordinates.forEach(c => {
 
-        const fuentesMap = new Map();
+                if (
+                    bounds.contains(
+                        L.latLng(c[1], c[0])
+                    )
+                ) {
+                    visible = true;
+                }
+            });
+        }
 
-        proyectosLayer.eachLayer(layer => {
+        if (!visible) return;
 
-            const feature =
-                layer.feature;
+        const fuente =
+            feature.properties.FUENTE;
 
-            if (!feature) return;
+        if (
+            fuente &&
+            !fuentesMap.has(fuente)
+        ) {
+
+            fuentesMap.set(
+                fuente,
+                fuente
+            );
+        }
+    });
+
+    // =========================
+    // LÍNEAS VISIBLES
+    // =========================
+
+    lineasLayer.eachLayer(layer => {
+
+        if (
+            map.getBounds().intersects(
+                layer.getBounds()
+            )
+        ) {
 
             const fuente =
-                feature.properties.FUENTE;
+                layer.feature.properties.FUENTE;
 
             if (
                 fuente &&
@@ -520,27 +579,74 @@ proyectosLayer.eachLayer(layer => {
                     fuente
                 );
             }
-        });
+        }
+    });
 
-        fuentesMap.forEach(fuente => {
+    // =========================
+    // POLÍGONOS VISIBLES
+    // =========================
 
-            cont.innerHTML += `
-                <div class="legend-item">
+    polyLayer.eachLayer(layer => {
 
-                    <div
-                        class="legend-color"
-                        style="
-                            background:${obtenerColor(fuente)}
-                        ">
-                    </div>
+        if (
+            map.getBounds().intersects(
+                layer.getBounds()
+            )
+        ) {
 
-                    <span>${fuente}</span>
+            const fuente =
+                layer.feature.properties.FUENTE;
 
-                </div>
-            `;
-        });
+            if (
+                fuente &&
+                !fuentesMap.has(fuente)
+            ) {
+
+                fuentesMap.set(
+                    fuente,
+                    fuente
+                );
+            }
+        }
+    });
+
+    // =========================
+    // VACÍO
+    // =========================
+
+    if (fuentesMap.size === 0) {
+
+        cont.innerHTML = `
+            <div class="legend-empty">
+                No hay proyectos visibles
+            </div>
+        `;
+
+        return;
     }
 
+    // =========================
+    // RENDER LEYENDA
+    // =========================
+
+    fuentesMap.forEach(fuente => {
+
+        cont.innerHTML += `
+            <div class="legend-item">
+
+                <div
+                    class="legend-color"
+                    style="
+                        background:${obtenerColor(fuente)}
+                    ">
+                </div>
+
+                <span>${fuente}</span>
+
+            </div>
+        `;
+    });
+}
     // =========================
     // FILTROS
     // =========================
