@@ -1023,7 +1023,7 @@ function poblarFiltroUV(unidadesVecinales) {
         fetch('./limitecomunal.geojson')
             .then(r => r.json()),
 
-        fetch('./UnidadesVecinales.geojson')
+        fetch('./unidadesvecinales.geojson')
             .then(r => r.json())
 
     ]).then(([
