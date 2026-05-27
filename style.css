@@ -663,9 +663,7 @@ select {
 ========================= */
 
 .sidebar-header,
-.card-header,
-.card-numero,
-.card-title {
+.card-numero {
 
     display: none;
 }
