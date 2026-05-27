@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+<link
+    rel="icon"
+    type="image/png"
+    href="https://upload.wikimedia.org/wikipedia/commons/4/45/Escudo_de_Olmu%C3%A9.svg"
+/>
+    <meta charset="UTF-8">
+    <meta name="theme-color" content="#1e293b">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Dashboard SIG - Municipalidad de Olmué
+    </title>
+
+    <!-- LEAFLET -->
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet/dist/leaflet.css"
+    />
+    <!-- CSS -->
+    <link rel="stylesheet" href="./style.css?v=8">
+
+</head>
+
+<body>
+
+    <!-- =========================
+         MAPA
+    ========================== -->
+
+    <div id="map"></div>
+
+
+    <!-- =========================
+         KPI MOBILE
+    ========================== -->
+
+<div class="mobile-kpi">
+
+    <div class="kpi-box">
+        <div class="kpi-label">
+            Proyectos
+        </div>
+
+        <div
+            class="kpi-value"
+            id="cantidad-mobile"
+        >
+            0
+        </div>
+    </div>
+
+    <div class="kpi-box">
+        <div class="kpi-label">
+            Monto
+        </div>
+
+        <div
+            class="kpi-value"
+            id="monto-mobile"
+        >
+            $0
+        </div>
+    </div>
+
+    <div
+        class="kpi-box"
+        id="mobileFiltroBtn"
+    >
+        <div class="kpi-label">
+            Filtros
+        </div>
+
+        <div class="kpi-value">
+            ⚙️
+        </div>
+    </div>
+
+</div>
+
+
+    <!-- =========================
+         BOTÓN SIDEBAR
+    ========================== -->
+
+    <button id="toggleSidebar">
+        ☰
+    </button>
+
+
+    <!-- =========================
+         SIDEBAR
+    ========================== -->
+
+    <div
+        id="sidebar"
+        class="sidebar"
+    >
+
+        <!-- HEADER -->
+        <div class="sidebar-header">
+
+            <img
+                src="https://upload.wikimedia.org/wikipedia/commons/4/45/Escudo_de_Olmu%C3%A9.svg"
+                alt="Escudo Olmué"
+                class="logo-olmue"
+            >
+
+            <div>
+
+                <h1 class="titulo-app">
+                    Cartera SECPLAN
+                </h1>
+
+                <div class="subtitulo-app">
+                    Municipalidad de Olmué
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- KPI CANTIDAD -->
+        <div class="card">
+
+            <div class="card-header">
+
+                <div class="card-icon icon-blue">
+                    📍
+                </div>
+
+                <div class="card-title">
+                    Proyectos visibles
+                </div>
+
+            </div>
+
+            <div
+                class="card-numero"
+                id="cantidad"
+            >
+                0
+            </div>
+
+        </div>
+
+
+        <!-- KPI MONTO -->
+        <div class="card">
+
+            <div class="card-header">
+
+                <div class="card-icon icon-green">
+                    💰
+                </div>
+
+                <div class="card-title">
+                    Monto inversión
+                </div>
+
+            </div>
+
+            <div
+                class="card-numero"
+                id="monto"
+            >
+                $0
+            </div>
+
+        </div>
+
+
+        <!-- FILTRO ESTADO -->
+        <div class="card">
+
+            <div class="card-title">
+               Filtro Estado
+            </div>
+
+            <select id="filtro-estados"></select>
+
+        </div>
+
+
+        <!-- FILTRO FUENTE -->
+        <div class="card">
+
+            <div class="card-title">
+                Filtro Financiamiento
+            </div>
+
+            <select id="filtro-fuentes"></select>
+
+        </div>
+<div class="card" id="contenedor-filtro-uv" style="display:none;">
+
+    <div class="card-title">
+        Unidad Vecinal
+    </div>
+
+    <select id="filtro-uv">
+
+        <option value="TODOS">
+            Todas las UV
+        </option>
+
+    </select>
+
+</div>
+    </div>
+
+
+    <!-- =========================
+         LEYENDA
+    ========================== -->
+
+    <div
+        id="leyenda-panel"
+        class="collapsed"
+    >
+
+        <div id="leyenda-header">
+            ☰ Fuente de Financiamiento
+        </div>
+
+        <div id="leyenda-contenido"></div>
+
+    </div>
+
+
+    <!-- LEAFLET -->
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+    <!-- JS -->
+     <script src="https://unpkg.com/leaflet-pip@latest/leaflet-pip.min.js"></script>
+    <script src="./app.js"></script>
+    </body>
+
+</html>
