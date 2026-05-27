@@ -75,41 +75,12 @@ body {
    BOTÓN SIDEBAR
 ========================= */
 
-#toggleSidebar {
+
     #toggleSidebar {
 
     display: none !important;
 }
 
-    position: absolute;
-
-    top: 24px;
-    left: 390px;
-
-    z-index: 3000;
-
-    width: 52px;
-    height: 52px;
-
-    border: none;
-
-    border-radius: 16px;
-
-    background: #eac102;
-
-    color: #ffffff;
-
-    font-size: 24px;
-
-    cursor: pointer;
-
-    box-shadow:
-        0 6px 18px rgba(0,0,0,0.14);
-
-    backdrop-filter: blur(10px);
-
-    transition: all 0.25s ease;
-}
 
 #toggleSidebar:hover {
 
@@ -861,9 +832,7 @@ select:hover {
 and (orientation: landscape) {
 .kpis,
 .mobile-kpi {
-    display: flex !important;
-    opacity: 1 !important;
-    visibility: visible !important;
+    display: flex;
 }
 
 .filters,
@@ -895,11 +864,11 @@ and (orientation: landscape) {
 
     z-index: 6000;
 
-    transform: none;
+    transform: translateY(-140%);
 
-    opacity: 1;
+    opacity: 0;
 
-    pointer-events: auto;
+    pointer-events: none;
 
     transition:
         transform 0.28s ease,
@@ -914,21 +883,6 @@ and (orientation: landscape) {
 
     pointer-events: auto;
 }
-
-    .mobile-kpi {
-
-        top: 10px;
-
-        left: 10px;
-
-        width: auto;
-
-        max-width: 320px;
-
-        right: auto;
-
-        gap: 8px;
-    }
 
     .kpi-box {
 
