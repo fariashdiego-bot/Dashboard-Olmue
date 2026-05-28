@@ -825,37 +825,31 @@ and (orientation: landscape) {
     display: none !important;
 }
     .sidebar {
+    position: absolute;
 
-        position: absolute;
+    top: 76px;
+    left: 12px;
 
-        top: 76px;
+    width: 320px;   /* 👈 aquí controlas el ancho */
 
-        left: 12px;
+    max-height: calc(100vh - 160px);
 
-        right: 12px;
+    overflow-y: auto;
 
-        width: auto;
+    padding: 18px;
 
-        max-height: calc(100vh - 160px);
+    border-radius: 24px;
 
-        overflow-y: auto;
+    z-index: 6000;
 
-        padding: 18px;
+    transition:
+        transform 0.28s ease,
+        opacity 0.28s ease;
 
-        border-radius: 24px;
-
-        z-index: 6000;
-
-        transition:
-            transform 0.28s ease,
-            opacity 0.28s ease;
-
-        transform: translateY(-140%);
-
-        opacity: 0;
-
-        pointer-events: none;
-    }
+    transform: translateY(-140%);
+    opacity: 0;
+    pointer-events: none;
+}
     /* OCULTAR KPIs DEL SIDEBAR */
      #cantidad,
      #monto,
