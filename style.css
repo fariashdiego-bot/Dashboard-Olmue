@@ -69,24 +69,24 @@ body {
 
     .sidebar {
 
-        width: 270px;
+        width: 240px;
 
-        padding: 18px;
+        padding: 12px;
     }
 
     .titulo-app {
 
-        font-size: 24px;
+        font-size: 20px;
     }
 
     .card-numero {
 
-        font-size: 32px;
+        font-size: 28px;
     }
 
     .card {
 
-        padding: 16px;
+        padding: 12px;
     }
 }
 
