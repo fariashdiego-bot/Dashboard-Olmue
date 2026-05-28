@@ -473,6 +473,9 @@ select {
 .kpi-desktop {
         display: none !important;
     }
+.sidebar .card {
+    display: none;
+}
 
     .sidebar {
 
