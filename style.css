@@ -856,7 +856,6 @@ and (orientation: landscape) {
         opacity: 1;
         pointer-events: auto;
     }
-}
     /* OCULTAR KPIs DEL SIDEBAR */
      #cantidad,
      #monto,
