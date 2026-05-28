@@ -825,30 +825,37 @@ and (orientation: landscape) {
     display: none !important;
 }
     .sidebar {
-    position: absolute;
+        position: absolute;
 
-    top: 76px;
-    left: 12px;
+        top: 76px;
+        left: 12px;
 
-    width: 320px;   /* 👈 aquí controlas el ancho */
+        width: 320px !important;   /* 🔥 fuerza total */
 
-    max-height: calc(100vh - 160px);
+        right: auto !important;    /* 🔥 evita stretch */
 
-    overflow-y: auto;
+        max-width: 85vw;           /* seguridad extra */
 
-    padding: 18px;
+        max-height: calc(100vh - 160px);
 
-    border-radius: 24px;
+        overflow-y: auto;
 
-    z-index: 6000;
+        padding: 18px;
 
-    transition:
-        transform 0.28s ease,
-        opacity 0.28s ease;
+        border-radius: 24px;
 
-    transform: translateY(-140%);
-    opacity: 0;
-    pointer-events: none;
+        z-index: 6000;
+
+        transform: translateY(-140%);
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    .sidebar.mobile-open {
+        transform: translateY(0);
+        opacity: 1;
+        pointer-events: auto;
+    }
 }
     /* OCULTAR KPIs DEL SIDEBAR */
      #cantidad,
