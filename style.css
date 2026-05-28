@@ -44,7 +44,7 @@ body {
     top: 24px;
     left: 24px;
 
-    width: 340px;
+    width: clamp(280px, 20vw, 360px);
 
     z-index: 2000;
 
